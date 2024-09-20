@@ -28,19 +28,19 @@ set scriptUrl=""
 set scriptName=""
 
 if %choice%==1 (
-    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/refs/heads/main/Wireguard%20Scripts/DownloadWireguard.ps1
+    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/DownloadWireguard.ps1
     set scriptName=DownloadWireguard.ps1
 )
 if %choice%==2 (
-    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/refs/heads/main/Wireguard%20Scripts/SetupWireguard.ps1
+    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/SetupWireguard.ps1
     set scriptName=SetupWireguard.ps1
 )
 if %choice%==3 (
-    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/refs/heads/main/Wireguard%20Scripts/CreateWgActivationSchedule.ps1
+    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/CreateWgActivationSchedule.ps1
     set scriptName=CreateWgActivationSchedule.ps1
 )
 if %choice%==4 (
-    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/refs/heads/main/Wireguard%20Scripts/WireGuardActivationScript.ps1
+    set scriptUrl=https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/WireGuardActivationScript.ps1
     set scriptName=WireGuardActivationScript.ps1
 )
 if %choice%==5 exit
