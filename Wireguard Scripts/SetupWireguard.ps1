@@ -11,6 +11,16 @@ if (-not (Is-RunAsAdministrator)) {
     exit
 }
 
+# Get the directory of the current script
+$scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+
+# Define the script file path in the current script's directory (for activation script download)
+$scriptPath = Join-Path -Path $scriptDirectory -ChildPath "\WireGuardActivationScript.ps1"
+
+# Download the activation script
+Write-Host "Downloading WireGuardActivationScript to $scriptPath..."
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/WireGuardActivationScript.ps1 -OutFile $scriptPath
+
 # Define target directory
 $wireGuardDir = "C:\Program Files\WireGuard"
 
@@ -39,3 +49,6 @@ if (Test-Path -Path $wireGuardDir) {
         Write-Host "WireGuardActivationScript.ps1 not found in the script's directory ($scriptDir)."
     }
 }
+
+# Pause the script and wait for user input to close
+Read-Host -Prompt "Press Enter to exit"
