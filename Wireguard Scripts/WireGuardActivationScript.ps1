@@ -1,3 +1,16 @@
+# Define a function to check if the script is run as Administrator
+function Is-RunAsAdministrator {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Relaunch script as Administrator if not already
+if (-not (Is-RunAsAdministrator)) {
+    Write-Host "Script not run as Administrator. Relaunching with elevated privileges..."
+    Start-Process powershell "-ExecutionPolicy Bypass -File '$PSCommandPath'" -Verb RunAs
+    exit
+}
+
 # Disable SSL certificate validation
 Add-Type @"
     using System.Net;
