@@ -21,6 +21,26 @@ $scriptPath = Join-Path -Path $scriptDirectory -ChildPath "\WireGuardActivationS
 Write-Host "Downloading WireGuardActivationScript to $scriptPath..."
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/WireGuardActivationScript.ps1 -OutFile $scriptPath
 
+# Define the URL
+$url = Read-Host "Please enter the URL to download the file"
+
+# Perform the web request
+$response = Invoke-WebRequest -Uri $url
+
+# Extract the filename from the Content-Disposition header
+$contentDisposition = $response.Headers["Content-Disposition"]
+$filename = $contentDisposition -match 'filename="(.+)"' | Out-Null; $matches[1]
+$extractedName = $matches[1]
+
+# Save the file in the same directory as the script
+$filePath = Join-Path -Path (Get-Location) -ChildPath $filename
+Write-Host "${filePath}${extractedName}"
+
+# Write the content to the file
+$response.Content | Set-Content -Path "${filePath}${extractedName}" -Encoding Byte
+
+Write-Host "File saved as "${filePath}${extractedName}""
+
 # Define target directory
 $wireGuardDir = "C:\Program Files\WireGuard"
 
