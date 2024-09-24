@@ -34,12 +34,12 @@ $extractedName = $matches[1]
 
 # Save the file in the same directory as the script
 $filePath = Join-Path -Path (Get-Location) -ChildPath $filename
-Write-Host "${filePath}${extractedName}"
+Write-Host "${scriptPath}${extractedName}"
 
 # Write the content to the file
-$response.Content | Set-Content -Path "${filePath}${extractedName}" -Encoding Byte
+$response.Content | Set-Content -Path "${scriptPath}${extractedName}" -Encoding Byte
 
-Write-Host "File saved as "${scriptDirectory}\${extractedName}""
+Write-Host "File saved as "${scriptPath}\${extractedName}""
 
 # Define target directory
 $wireGuardDir = "C:\Program Files\WireGuard"
