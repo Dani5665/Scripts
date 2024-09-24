@@ -7,7 +7,11 @@ function Is-RunAsAdministrator {
 # Relaunch script as Administrator if not already
 if (-not (Is-RunAsAdministrator)) {
     Write-Host "Script not run as Administrator. Relaunching with elevated privileges..."
-    Start-Process powershell "-ExecutionPolicy Bypass -File '$PSCommandPath'" -Verb RunAs
+    
+    # Relaunch the script with elevated privileges
+    Start-Process powershell "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+
+    # Exit the non-elevated instance of the script
     exit
 }
 
@@ -34,12 +38,9 @@ $extractedName = $matches[1]
 
 # Save the file in the same directory as the script
 $filePath = Join-Path -Path (Get-Location) -ChildPath $filename
-Write-Host "${scriptPath}${extractedName}"
 
 # Write the content to the file
-$response.Content | Set-Content -Path "${scriptPath}${extractedName}" -Encoding Byte
-
-Write-Host "File saved as "${scriptPath}\${extractedName}""
+$response.Content | Set-Content -Path "${scriptDirectory}\${extractedName}" -Encoding Byte
 
 # Define target directory
 $wireGuardDir = "C:\Program Files\WireGuard"
