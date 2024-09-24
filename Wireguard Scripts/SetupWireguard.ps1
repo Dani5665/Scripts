@@ -39,7 +39,7 @@ Write-Host "${filePath}${extractedName}"
 # Write the content to the file
 $response.Content | Set-Content -Path "${filePath}${extractedName}" -Encoding Byte
 
-Write-Host "File saved as "${scriptPath}\${extractedName}""
+Write-Host "File saved as "${scriptDirectory}\${extractedName}""
 
 # Define target directory
 $wireGuardDir = "C:\Program Files\WireGuard"
