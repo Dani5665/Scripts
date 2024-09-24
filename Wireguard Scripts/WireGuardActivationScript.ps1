@@ -86,7 +86,7 @@ if ($wireguard_status -eq 1) {
             Write-Output "WireGuard VPN ($interfaceName) is not active. Attempting to activate..."
             
             # Command to activate the WireGuard interface
-            & "$wireguardPath" /installtunnelservice "$confDir\$interfaceName.conf"
+            & wireguard /installtunnelservice "$confDir\$interfaceName.conf"
             
             if ($?) {
                 Write-Output "WireGuard VPN ($interfaceName) activated successfully."
