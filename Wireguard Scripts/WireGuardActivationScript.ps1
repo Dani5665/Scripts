@@ -1,15 +1,18 @@
-# Define a function to check if the script is run as Administrator
-function Is-RunAsAdministrator {
+# Check if the script is running with administrative privileges
+function Test-Admin {
     $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
     return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-# Relaunch script as Administrator if not already
-if (-not (Is-RunAsAdministrator)) {
-    Write-Host "Script not run as Administrator. Relaunching with elevated privileges..."
-    Start-Process powershell "-ExecutionPolicy Bypass -File '$PSCommandPath'" -Verb RunAs
+# Relaunch script with admin privileges if not running as admin
+if (-not (Test-Admin)) {
+    Write-Host "Not running as administrator. Relaunching with elevated privileges..."
+    Start-Process powershell.exe "-File `"$PSCommandPath`"" -Verb RunAs -WindowStyle Hidden
     exit
 }
+
+# Script is running with admin privileges, create the scheduled task
+
 
 # Disable SSL certificate validation
 Add-Type @"
@@ -25,15 +28,15 @@ Add-Type @"
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 # API credentials
-$api_key = ""
-$api_secret = ""
+$api_key = "xm4hOT7NRq6P9p5TwnynzPjZv15rviHQypnhcqK7gyEPw8xGMHaz6jnlswQSEJLjxXwblrTOHaMJRnsl"
+$api_secret = "OXcFBYNOCAHm4OX/xBhPHFTPpKG+YeBwxkwDqZsHBV9SpmZerMvc78PgFPSa/L1aQtxOfAtWciFcCwGV"
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
 
 # Try to send the GET request and handle potential errors
 try {
     # Send the GET request
-    $response = Invoke-WebRequest -Uri "" `
+    $response = Invoke-WebRequest -Uri "https://91.132.60.114/api/core/service/search" `
                                   -Method Get `
                                   -Headers @{Authorization="Basic $encoded_credentials"} `
                                   -UseBasicParsing
@@ -68,7 +71,7 @@ if ($wireguard_status -eq 1) {
     $wireguardPath = "C:\Program Files\WireGuard\wireguard.exe"
 
     #Start WireGuard
-    Start-Process -FilePath $wireguardPath -NoNewWindow -Wait
+    Start-Process -FilePath $wireguardPath -NoNewWindow -Wait -WindowStyle Hidden
 
     # Get the first .conf file in the directory
     $confFile = Get-ChildItem -Path $confDir -Filter "*.conf" | Select-Object -First 1
