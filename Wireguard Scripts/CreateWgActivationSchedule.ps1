@@ -11,27 +11,20 @@ if (-not (Test-Admin)) {
     exit
 }
 
-# Script is running with admin privileges, create the scheduled task
-
 $taskName = "WireGuardActivation"
 $scriptPath = "C:\Program Files\WireGuard\WireGuardActivationScript.ps1"
 
-# Define the action to run the script
-$action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$scriptPath`""
+# Define the action (running PowerShell with the script)
+$Action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument '-ExecutionPolicy Bypass -File "C:\Program Files\WireGuard\WireGuardActivationScript.ps1"'
 
-# Define the trigger to run the task at system startup and repeat every hour indefinitely
-$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 5) -RepetitionDuration (New-TimeSpan -Days 9999)
+# Trigger the task to run every 30 minutes
+$Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 1)
 
-# Define the principal (run with highest privileges)
-$principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -RunLevel Highest
+# Principal to run only if the user is logged on
+$Principal = New-ScheduledTaskPrincipal -UserId "yordan-desktop\yordan" -LogonType Interactive -RunLevel Highest
 
-# Define the task settings (allow running on batteries and don't stop if idle)
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopOnIdleEnd
+# Task settings
+$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 
-# Register the scheduled task
-try {
-    Register-ScheduledTask -Action $action -Trigger $trigger -Principal $principal -Settings $settings -TaskName $taskName
-    Write-Host "Scheduled task '$taskName' created to run at startup and repeat every hour."
-} catch {
-    Write-Host "Error creating the scheduled task: $_"
-}
+# Register the task without the author parameter
+Register-ScheduledTask -Action $Action -Trigger $Trigger -Principal $Principal -Settings $Settings -TaskName $taskName -Description "Task to run PowerShell script every 30 minutes only if user is logged on"
