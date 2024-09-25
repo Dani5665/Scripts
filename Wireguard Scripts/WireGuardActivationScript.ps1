@@ -28,15 +28,15 @@ Add-Type @"
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 # API credentials
-$api_key = "xm4hOT7NRq6P9p5TwnynzPjZv15rviHQypnhcqK7gyEPw8xGMHaz6jnlswQSEJLjxXwblrTOHaMJRnsl"
-$api_secret = "OXcFBYNOCAHm4OX/xBhPHFTPpKG+YeBwxkwDqZsHBV9SpmZerMvc78PgFPSa/L1aQtxOfAtWciFcCwGV"
+$api_key = ""
+$api_secret = ""
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
 
 # Try to send the GET request and handle potential errors
 try {
     # Send the GET request
-    $response = Invoke-WebRequest -Uri "https://91.132.60.114/api/core/service/search" `
+    $response = Invoke-WebRequest -Uri "" `
                                   -Method Get `
                                   -Headers @{Authorization="Basic $encoded_credentials"} `
                                   -UseBasicParsing
