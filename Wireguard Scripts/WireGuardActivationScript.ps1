@@ -103,3 +103,4 @@ if ($wireguard_status -eq 1) {
 } else {
     Write-Host "WireGuard is not running or an error occurred, skipping activation."
 }
+#test
