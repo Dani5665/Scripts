@@ -13,7 +13,7 @@ if (-not (Test-Admin)) {
 
 $usrId = whoami
 $taskName = "WireGuardActivation"
-$scriptPath = "C:\Program Files\WireGuard\WireGuardActivationScript.ps1"
+$scriptPath = "C:\Program Files\WireGuard\MainTaskScript.ps1"
 
 # Define the action (running PowerShell with the script)
 $Action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument '-ExecutionPolicy Bypass -File "C:\Program Files\MainTaskScript.ps1"'
