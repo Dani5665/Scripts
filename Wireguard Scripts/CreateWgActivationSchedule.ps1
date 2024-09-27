@@ -16,7 +16,7 @@ $taskName = "WireGuardActivation"
 $scriptPath = "C:\Program Files\WireGuard\MainTaskScript.ps1"
 
 # Define the action (running PowerShell with the script)
-$Action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument '-ExecutionPolicy Bypass -File "C:\Program Files\MainTaskScript.ps1"'
+$Action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument '-ExecutionPolicy Bypass -File "C:\Program Files\WireGuard\MainTaskScript.ps1"'
 
 # Trigger the task to run every 30 minutes
 $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 1)
