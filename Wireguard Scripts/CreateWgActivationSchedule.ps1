@@ -22,7 +22,7 @@ $Action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShel
 $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 1)
 
 # Principal to run only if the user is logged on
-$Principal = New-ScheduledTaskPrincipal -UserId "${$usrId}" -LogonType Interactive -RunLevel Highest
+$Principal = New-ScheduledTaskPrincipal -UserId "${usrId}" -LogonType Interactive -RunLevel Highest
 
 # Task settings
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
