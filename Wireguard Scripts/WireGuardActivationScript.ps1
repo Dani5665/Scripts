@@ -28,15 +28,18 @@ Add-Type @"
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 # API credentials
-$api_key = Read-Host "Please enter the api_key"
-$api_secret = Read-Host "Please enter the api_secret"
+param (
+    $api_key,
+    $api_secret,
+    $opn_url
+)
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
 
 # Try to send the GET request and handle potential errors
 try {
     # Send the GET request
-    $response = Invoke-WebRequest -Uri Read-Host "Please enter the URL" `
+    $response = Invoke-WebRequest -Uri "${opn_url}" `
                                   -Method Get `
                                   -Headers @{Authorization="Basic $encoded_credentials"} `
                                   -UseBasicParsing
