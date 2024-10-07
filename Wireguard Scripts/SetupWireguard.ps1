@@ -15,9 +15,6 @@ if (-not (Is-RunAsAdministrator)) {
     exit
 }
 
-#Set PowerShell Execution Policy
-Set-ExecutionPolicy Restricted
-
 # Get the directory of the current script
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
