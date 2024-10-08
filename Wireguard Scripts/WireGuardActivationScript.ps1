@@ -28,11 +28,6 @@ Add-Type @"
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 # API credentials
-param (
-    [string]$api_key,
-    [string]$api_secret,
-    [string]$opn_url
-)
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
 
