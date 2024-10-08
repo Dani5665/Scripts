@@ -29,9 +29,9 @@ Add-Type @"
 
 # API credentials
 param (
-    $api_key,
-    $api_secret,
-    $opn_url
+    [string]$api_key,
+    [string]$api_secret,
+    [string]$opn_url
 )
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
