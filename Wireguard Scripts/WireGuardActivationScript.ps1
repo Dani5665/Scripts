@@ -27,6 +27,11 @@ Add-Type @"
 "@
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
+#Get variables
+$api_key = [System.Environment]::GetEnvironmentVariable("opnsence_wg_api_key", "Machine")
+$api_secret = [System.Environment]::GetEnvironmentVariable("opnsence_wg_api_secret", "Machine")
+$opn_url = [System.Environment]::GetEnvironmentVariable("opnsence_wg_api_url", "Machine")
+
 # API credentials
 $encoded_credentials = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${api_key}:${api_secret}"))
 $wireguard_status = 0
