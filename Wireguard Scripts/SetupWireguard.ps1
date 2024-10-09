@@ -19,11 +19,11 @@ if (-not (Is-RunAsAdministrator)) {
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # Define the script file path in the current script's directory (for activation script download)
-$scriptPath = Join-Path -Path $scriptDirectory -ChildPath "\WireGuardActivationScript.ps1"
+$scriptPath = Join-Path -Path $scriptDirectory -ChildPath "\MainTaskScript.ps1"
 
 # Download the activation script
-Write-Host "Downloading WireGuardActivationScript to $scriptPath..."
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/WireGuardActivationScript.ps1 -OutFile $scriptPath
+Write-Host "Downloading MainTaskScript.ps1 to $scriptPath..."
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/MainTaskScript.ps1 -OutFile $scriptPath
 
 # Define the URL
 $url = Read-Host "Please enter the URL to download the file"
@@ -60,14 +60,14 @@ if (Test-Path -Path $wireGuardDir) {
         Write-Host "No .conf file found in the script's directory ($scriptDir)."
     }
     
-    # Copy "WireGuardActivationScript.ps1" from the script's directory to "C:\Program Files\WireGuard"
-    $activationScript = Join-Path -Path $scriptDir -ChildPath "WireGuardActivationScript.ps1"
+    # Copy "MainTaskScript.ps1" from the script's directory to "C:\Program Files\WireGuard"
+    $activationScript = Join-Path -Path $scriptDir -ChildPath "MainTaskScript.ps1"
     
     if (Test-Path -Path $activationScript) {
         Copy-Item -Path $activationScript -Destination $wireGuardDir -Force
-        Write-Host "Copied WireGuardActivationScript.ps1 to $wireGuardDir"
+        Write-Host "Copied MainTaskScript.ps1 to $wireGuardDir"
     } else {
-        Write-Host "WireGuardActivationScript.ps1 not found in the script's directory ($scriptDir)."
+        Write-Host "MainTaskScript.ps1 not found in the script's directory ($scriptDir)."
     }
 }
 
