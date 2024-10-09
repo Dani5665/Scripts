@@ -1,11 +1,8 @@
-# Define values in Script1
-$api_key = ""
-$api_secret = ""
-$opn_url = ""
+#Call DownloadScripts.ps1 in the background
+Start-Process -FilePath "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
+    -ArgumentList "-File `"C:\Program Files\WireGuard\DownloadScripts.ps1`"" `
+    -NoNewWindow -Wait
 
-# Call ToRun1.ps1 with the variables as arguments
-#& "C:\Program Files\WireGuard\DownloadScripts.ps1" 
-Start-Process -FilePath "powershell.exe" -ArgumentList "-File C:\Program Files\WireGuard\DownloadScripts.ps1" -NoNewWindow -Wait
-
-#& "C:\Program Files\WireGuard\WireGuardActivationScript.ps1" -api_key $api_key -api_secret $api_secret -opn_url $opn_url
-Start-Process -FilePath "powershell.exe" -ArgumentList "-File 'C:\Program Files\WireGuard\WireGuardActivationScript.ps1' -api_key '$api_key' -api_secret '$api_secret' -opn_url '$opn_url'" -NoNewWindow -Wait
+# Start Script2 in the background, passing the parameters
+$script2Path = "C:\Program Files\WireGuard\WireGuardActivationScript.ps1"  # Modify this path to the actual location of Script2
+Start-Process -FilePath "powershell.exe" -ArgumentList "-File `"$script2Path`" -key `"$key`" -secret `"$secret`" -url `"$url`"" -NoNewWindow -PassThru
