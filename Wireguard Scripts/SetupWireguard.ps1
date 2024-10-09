@@ -18,12 +18,16 @@ if (-not (Is-RunAsAdministrator)) {
 # Get the directory of the current script
 $scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
-# Define the script file path in the current script's directory (for activation script download)
-$scriptPath = Join-Path -Path $scriptDirectory -ChildPath "\MainTaskScript.ps1"
+# Define the script file paths in the current script's directory
+$mainTaskScriptPath = Join-Path -Path $scriptDirectory -ChildPath "MainTaskScript.ps1"
+$downloadScriptsPath = Join-Path -Path $scriptDirectory -ChildPath "DownloadScripts.ps1"
 
-# Download the activation script
-Write-Host "Downloading MainTaskScript.ps1 to $scriptPath..."
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/MainTaskScript.ps1 -OutFile $scriptPath
+# Download the activation scripts
+Write-Host "Downloading MainTaskScript.ps1 to $mainTaskScriptPath..."
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/MainTaskScript.ps1 -OutFile $mainTaskScriptPath
+
+Write-Host "Downloading DownloadScripts.ps1 to $downloadScriptsPath..."
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dani5665/Scripts/main/Wireguard%20Scripts/DownloadScripts.ps1 -OutFile $downloadScriptsPath
 
 # Define the URL
 $url = Read-Host "Please enter the URL to download the file"
@@ -61,13 +65,19 @@ if (Test-Path -Path $wireGuardDir) {
     }
     
     # Copy "MainTaskScript.ps1" from the script's directory to "C:\Program Files\WireGuard"
-    $activationScript = Join-Path -Path $scriptDir -ChildPath "MainTaskScript.ps1"
-    
-    if (Test-Path -Path $activationScript) {
-        Copy-Item -Path $activationScript -Destination $wireGuardDir -Force
+    if (Test-Path -Path $mainTaskScriptPath) {
+        Copy-Item -Path $mainTaskScriptPath -Destination $wireGuardDir -Force
         Write-Host "Copied MainTaskScript.ps1 to $wireGuardDir"
     } else {
         Write-Host "MainTaskScript.ps1 not found in the script's directory ($scriptDir)."
+    }
+
+    # Copy "DownloadScripts.ps1" from the script's directory to "C:\Program Files\WireGuard"
+    if (Test-Path -Path $downloadScriptsPath) {
+        Copy-Item -Path $downloadScriptsPath -Destination $wireGuardDir -Force
+        Write-Host "Copied DownloadScripts.ps1 to $wireGuardDir"
+    } else {
+        Write-Host "DownloadScripts.ps1 not found in the script's directory ($scriptDir)."
     }
 }
 
